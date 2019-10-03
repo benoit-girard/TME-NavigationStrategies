@@ -12,13 +12,15 @@ L’objectif de ce TME est de tester plusieurs méthodes de coordination de str
 
 Deux stratégies de navigation sont pré-programmées : 
 * Un suivi de mur (wallFollower.py) qui maintient le robot à distance des murs (trop près, il s'en éloigne, trop loin il s'en rapproche), tourne sur lui-même à la recherche d'un mur s'il n'y en a pas à proximité, ou s'il a un obstacle devant lui.
-* Une approche de balise (radarGuidance.py) qui oriente le robot vers une balise dont la direction est fournie.
+* Une approche de balise (radarGuidance.py) qui oriente le robot vers une balise dont la direction est fournie, mais qui n'évite pas les obstacles.
 
 Elles sont testables de manière isolée en lançant ```python wallFollower.py``` et ```python radarGuidance.py```. La coordination des deux stratégies est à coder dans ```strategyGating.py```, qui contient déjà le code permettant de lancer la simulation, de récupérer les données des senseurs, de les transformer en un identifiant d'état (voir plus loin), de téléporter le robot lorsqu'il arrive au but (et de le récompenser), de le punir lorsqu'il approche trop d'un mur, et de répéter les opérations jusqu'à l'obtention de 40 récompenses.
 
+Le codage proprement-dit de ce TME correspond à, maximum, 40 lignes de python. Il faut faire du code propre et qui marche **mais** ça n'est pas le coeur du travail : il s'agit surtout d'essayer d'avoir une approche scientifique par rapport à la quesiton posée. A savoir : mesurer les phénomènes avec, autant que possible, suffisament de répétitions pour en extraire la tendance générale et la dispersion autour de cette tendance, les quantifier afin de pouvoir effectuer des comparaisons, représenter les données obtenues de manière lisible, analyser et commenter ces résultats.
+
 ## Informations techniques
 
-Vous allez devoir ajouter du code dans la fonction ```strategyGating``` du fichier ```strategyGating.py``` pour coder les méthodes d'arbitrage proposées en exercice, et aussi probablement du code pour enregistrer des données en fin d'expérience, à la fin de la fonction ```main``` de ce même fichier.
+Vous allez devoir ajouter du code dans la fonction ```strategyGating``` du fichier ```strategyGating.py``` pour coder les méthodes d'arbitrage proposées en exercice, et aussi probablement du code pour enregistrer des données en fin d'expérience, à la fin de la fonction ```main``` de ce même fichier. Chaque méthode d'abitrage doit, au final, indiquer le choix de l'une ou l'autre des stratégies de navigation en affectant la variable ```choice``` avec ```0``` (activation du suivi de mur) ou ```1``` (activation de l'approche de balise).
 
 Lorsqu'une expérience est menée à terme (jusqu'à atteindre ```nbTrials```), la durée de chaque essai est enregistrée dans un fichier de la forme ```log/time-TrialDuration-methode.txt ```. 
 
@@ -47,9 +49,20 @@ Prévoyez de m’envoyer par mail à la fin du TME votre code de ```strategyGa
 
 1. Vous pouvez constater en lançant un arbitrage de type ```random``` qu’un choix uniforme à chaque pas de temps de l’une des deux stratégies n’a pratiquement aucune chance de sortir le robot du cul-de-sac. Ecrivez une première méthode d’arbitrage ```randomPersist``` choisissant l’une des deux stratégies avec la même probabilité, mais persistant dans son choix pendant deux secondes. Cette stabilité accrue dans les choix devrait permettre au robot d’avoir une réelle chance de sortir du cul-de-sac.
 
-2. Effectuez 20 essais avec cette nouvelle stratégie, gardez de côté le fichier ```XXX-TrialDurations-YYY``` qui contient le temps nécessaire à chaque essai pour atteindre le but. Calculez la médiane, les premier et troisième quartiles de ces temps. Ces données vont nous servir de référence: toute méthode *intelligente* devra essayer de faire mieux que cette approche aveugle. *Vous pouvez, pour cela, utiliser la fonction « percentile » de numpy.*  
+2. Effectuez 20 essais avec cette nouvelle stratégie, gardez de côté le fichier ```XXX-TrialDurations-YYY``` qui contient le temps nécessaire à chaque essai pour atteindre le but. Calculez la médiane, les premier et troisième quartiles de ces temps. Ces données vont nous servir de référence: toute méthode *intelligente* devra essayer de faire mieux que cette approche aveugle. *Vous pouvez, pour cela, utiliser la fonction « percentile » de numpy.*
 **Pro-tip :** Pendant que ça tourne, plutôt que de vous laisser hypnotiser par le robot qui bouge, attaquez la question suivante : vous avez un temps limité...
 
 3. Implémentez une méthode d'arbitrage ```qlearning``` similaire à celle utilisée par (Dollé et al., 2010) : elle utilise un algorithme de Q Learning pour apprendre, essai après essai, quelle est la meilleure stratégie à choisir en fonction de l’état du monde.
+
 **Définition des états :** On travaille ici avec une approche tabulaire, les états sont discrets, ils on un identifiant qui est une chaîne de caractère construite de la manière suivante (voir figure): les trois premiers caractères (0 ou 1) indiquent s'il y a un mur à proximité à gauche, au milieu, à droite ; le caractère suivant, entre 0 et 7, indique la direction de la balise ; le dernier (0, 1 ou 2) indique si la balise est proche (<125 pixels), moyennement éloignée (<250 pixels), ou lointaine (>= 250 pixels). Ces états sont déjà construits (par la fonction ```buildStateFromSensors```), l'état courant est lisible dans ```S_t```, l'état précédent dans ```S_tm1```.
-**Q-Learning :**
+
+**Q-Learning :** Il vous faut créer et mettre à jour la valeur Q(s,a) des couples (état,action) rencontrés, et l'utiliser cha que fois que nécessaire pour choisir la prochaine stratégie de navigation active. Pour cela, il faut calculer à chaque pas de temps l'erreur de prédiction de récompense : 
+
+![delta](RPE.png)
+Puis mettre à jour la Q-valeur correspondant à la dernière action effectuée :
+
+![Q update](QUpdate.png)
+Le choix de l'action est alors effectué en effectuant un tirage dans la distribution de probabilité résultant d'un softmax sur les Q-valeurs de l'état courant: 
+
+![softmax](Softmax.png)
+Dans un premier temps, utilisez les paramètres : ```alpha=0.4```, ```beta=4```, ```gamma=0.95```.
