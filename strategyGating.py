@@ -18,7 +18,7 @@ inity = 35
 # strategy choice related stuff:
 choice = -1
 choice_tm1 = -1
-lastChoice = 0
+tLastChoice = 0
 rew = 0
 
 i2name=['wallFollower','radarGuidance']
@@ -51,7 +51,7 @@ S_tm1 = ''
 def strategyGating(arbitrationMethod,verbose=True):
   global choice
   global choice_tm1
-  global lastChoice
+  global tLastChoice
   global rew
 
   # The chosen gating strategy is to be coded here:
