@@ -57,7 +57,9 @@ Prévoyez de m’envoyer par mail à la fin du TME votre code de ```strategyGa
 
 3. Implémentez une méthode d'arbitrage ```qlearning``` similaire à celle utilisée par (Dollé et al., 2010) : elle utilise un algorithme de Q Learning pour apprendre, essai après essai, quelle est la meilleure stratégie à choisir en fonction de l’état du monde.
 
-**Définition des états :** On travaille ici avec une approche tabulaire, les états sont discrets, ils on un identifiant qui est une chaîne de caractère construite de la manière suivante (voir figure): les trois premiers caractères (0 ou 1) indiquent s'il y a un mur à proximité à gauche, au milieu, à droite ; le caractère suivant, entre 0 et 7, indique la direction de la balise ; le dernier (0, 1 ou 2) indique si la balise est proche (<125 pixels), moyennement éloignée (<250 pixels), ou lointaine (>= 250 pixels). Ces états sont déjà construits (par la fonction ```buildStateFromSensors```), l'état courant est lisible dans ```S_t```, l'état précédent dans ```S_tm1```.
+![Définition des états](FigStates.png)
+
+**Définition des états :** On travaille ici avec une approche tabulaire, les états sont discrets, ils ont un identifiant qui est une chaîne de caractère construite de la manière suivante : les trois premiers caractères (0 ou 1) indiquent s'il y a un mur à proximité à gauche, au milieu, à droite ; le caractère suivant, entre 0 et 7, indique la direction de la balise ; le dernier (0, 1 ou 2) indique si la balise est proche (<125 pixels), moyennement éloignée (<250 pixels), ou lointaine (>= 250 pixels). Ces états sont déjà construits (par la fonction ```buildStateFromSensors```), l'état courant est lisible dans ```S_t```, l'état précédent dans ```S_tm1```.
 
 **Q-Learning :** Il vous faut créer et mettre à jour la valeur Q(s,a) des couples (état,action) rencontrés, et l'utiliser cha que fois que nécessaire pour choisir la prochaine stratégie de navigation active. Pour cela, il faut calculer à chaque pas de temps l'erreur de prédiction de récompense :
 
