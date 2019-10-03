@@ -6,6 +6,8 @@ Ce TME requiert l'installation de [pyfastsim](https://github.com/alexendy/pyfast
 
 C'est un complément des cours sur les stratégies multiples de navigation et sur l'apprentissage par renforcement.
 
+Il est pensé pour occuper une première séance de 2 heures de découverte et de début de mise en place du code, et d'une 2e séance de 4h, notée, servant principalement à acquérir les données, à les analyser et à produire le document de réponse aux questions.
+
 ## Présentation générale
 
 L’objectif de ce TME est de tester plusieurs méthodes de coordination de stratégies de navigation pour un robot doté de deux stratégies simples, en quantifiant leur efficacité dans un environnement où la coopération de ces stratégies est nécessaire.
