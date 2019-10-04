@@ -18,13 +18,13 @@ Deux stratégies de navigation sont pré-programmées :
 
 Elles sont testables de manière isolée en lançant ```python wallFollower.py``` et ```python radarGuidance.py```. La coordination des deux stratégies est à coder dans ```strategyGating.py```, qui contient déjà le code permettant de lancer la simulation, de récupérer les données des senseurs, de les transformer en un identifiant d'état (voir plus loin), de téléporter le robot lorsqu'il arrive au but (et de le récompenser), de le punir lorsqu'il approche trop d'un mur, et de répéter les opérations jusqu'à l'obtention de 40 récompenses.
 
-Le codage proprement-dit de ce TME correspond à, maximum, 40 lignes de python. Il faut faire du code propre et qui marche **mais** ça n'est pas le coeur du travail : il s'agit surtout d'essayer d'avoir une approche scientifique par rapport à la quesiton posée. A savoir : mesurer les phénomènes avec, autant que possible, suffisament de répétitions pour en extraire la tendance générale et la dispersion autour de cette tendance, les quantifier afin de pouvoir effectuer des comparaisons, représenter les données obtenues de manière lisible, analyser et commenter ces résultats.
+Le codage proprement-dit de ce TME correspond à, maximum, 40 lignes de python. Il faut faire du code propre et qui marche **mais** ça n'est pas le coeur du travail : il s'agit surtout d'essayer d'avoir une approche scientifique par rapport à la question posée. A savoir : mesurer les phénomènes avec, autant que possible, suffisament de répétitions pour en extraire la tendance générale et la dispersion autour de cette tendance, les quantifier afin de pouvoir effectuer des comparaisons, représenter les données obtenues de manière lisible, analyser et commenter ces résultats.
 
 ## Informations techniques
 
 Vous allez devoir ajouter du code dans la fonction ```strategyGating``` du fichier ```strategyGating.py``` pour coder les méthodes d'arbitrage proposées en exercice, et aussi probablement du code pour enregistrer des données en fin d'expérience, à la fin de la fonction ```main``` de ce même fichier. Chaque méthode d'abitrage doit, au final, indiquer le choix de l'une ou l'autre des stratégies de navigation en affectant la variable ```choice``` avec ```0``` (activation du suivi de mur) ou ```1``` (activation de l'approche de balise).
 
-Lorsqu'une expérience est menée à terme (jusqu'à atteindre ```nbTrials```), la durée de chaque essai est enregistrée dans un fichier de la forme ```log/time-TrialDuration-methode.txt ```.
+Lorsqu'une expérience est menée à terme (jusqu'à atteindre ```nbTrials```), la durée de chaque essai est enregistrée dans un fichier de la forme ```log/time-TrialDuration-method.txt ``` (pensez à créer un répertoire ```log/```).
 
 ## Description du problème
 
@@ -33,9 +33,9 @@ Lorsqu'une expérience est menée à terme (jusqu'à atteindre ```nbTrials```), 
 L’environnement utilisé est composé d’une arène carrée (600x600 pixels) comprenant un obstacle, et un but. Ce but est de type goal dans fastsim, ce qui veut dire qu’il s’agit d’une balise dont la direction peut être détectée par un senseur de type radar, même à travers les murs.
 
 Le robot est équipé des capteurs suivants :
-— un télémètre laser de 200 degrés d’ouverture, fournissant une mesure de distance tous les degrés,
-— des détecteurs de contact droite et gauche,
-— un radar capable de détecter la direction du but dans l’un des 8 secteurs autour du robot,
+- un télémètre laser de 200 degrés d’ouverture, fournissant une mesure de distance tous les degrés,
+- des détecteurs de contact droite et gauche,
+- un radar capable de détecter la direction du but dans l’un des 8 secteurs autour du robot,
 - un capteur grossier de distance de la balise (0 : proche, 1 : moyenne, 2 : éloignée) est simulé à partir de la position du robot produite par le simulateur, elle est utilisée dans la définition d'état pour l'apprentissage.
 
 Le robot démarre toujours la simulation à la position (300,35).
@@ -61,7 +61,7 @@ Prévoyez de m’envoyer par mail à la fin du TME votre code de ```strategyGa
 
 **Définition des états :** On travaille ici avec une approche tabulaire, les états sont discrets, ils ont un identifiant qui est une chaîne de caractère construite de la manière suivante : les trois premiers caractères (0 ou 1) indiquent s'il y a un mur à proximité à gauche, au milieu, à droite ; le caractère suivant, entre 0 et 7, indique la direction de la balise ; le dernier (0, 1 ou 2) indique si la balise est proche (<125 pixels), moyennement éloignée (<250 pixels), ou lointaine (>= 250 pixels). Ces états sont déjà construits (par la fonction ```buildStateFromSensors```), l'état courant est lisible dans ```S_t```, l'état précédent dans ```S_tm1```.
 
-**Q-Learning :** Il vous faut créer et mettre à jour la valeur Q(s,a) des couples (état,action) rencontrés, et l'utiliser cha que fois que nécessaire pour choisir la prochaine stratégie de navigation active. Pour cela, il faut calculer à chaque pas de temps l'erreur de prédiction de récompense :
+**Q-Learning :** Il vous faut créer et mettre à jour la valeur Q(s,a) des couples (état,action) rencontrés, et l'utiliser chaque fois que nécessaire pour choisir la prochaine stratégie de navigation active. Pour cela, il faut calculer à chaque pas de temps l'erreur de prédiction de récompense :
 
 ![delta](RPE.png)
 
@@ -75,7 +75,7 @@ Le choix de l'action est alors effectué en effectuant un tirage dans la distrib
 
 Dans un premier temps, utilisez les paramètres : ```alpha=0.4```, ```beta=4```, ```gamma=0.95```.
 
-Dans notre cas particulier, les actions sont continues, prennent un temps indéfini. Faire des mises à jour à chaque pas de temps n'a pas beaucoup de sens : en 10 millisecondes, l'état sensoriel risque de peu changer, et le signal de valeur risque de se diluer très vite, à moins de prendre un ```gamma=0.95``` très très proche de 1. On pourrait ne faire des mises à jour de Q-Learning que lorsque l'état change, ou qu'un signal de récompense arrive, mais dans ce cas là, on pourrait rester indéfiniment coincé dans un état si l'action choisie ne permet pas d'en sortir. Pour contourner ces problèmes, on va ajouter une limite de temps (*timeout*) maximale de 2 secondes.
+Dans notre cas particulier, les actions sont continues, prennent un temps indéfini. Faire des mises à jour à chaque pas de temps n'a pas beaucoup de sens : en 10 millisecondes, l'état sensoriel risque de peu changer, et le signal de valeur risque de se diluer très vite, à moins de prendre un ```gamma``` très très proche de 1. On pourrait ne faire des mises à jour de Q-Learning que lorsque l'état change, ou qu'un signal de récompense arrive, mais dans ce cas là, on pourrait rester indéfiniment coincé dans un état si l'action choisie ne permet pas d'en sortir. Pour contourner ces problèmes, on va ajouter une limite de temps (*timeout*) maximale de 2 secondes.
 
 Il vous est donc demandé de faire fonctionner l'algorithme de la manière suivante :
 * faire une mise à jour de Q(s,a) lorsque l'état vient de changer, lorsqu'on a fait un choix à la boucle précédente, ou lorsque la récompense est non-nulle.
