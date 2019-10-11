@@ -1,5 +1,7 @@
 # TME-NavigationStrategies
 
+**IAR - 2019 : le TME est à me rendre à la fin de la séance du 18 octobre, à 13h au plus tard !**
+
 ## Contexte
 
 Ce TME requiert l'installation de [pyfastsim](https://github.com/alexendy/pyfastsim), une interface python du simulateur très léger [fastsim](https://github.com/jbmouret/libfastsim).
