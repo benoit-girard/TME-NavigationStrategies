@@ -6,6 +6,10 @@
 
 # Dependecies : boost, sdl, C++11 compatible compiler, python3, pip3, python2.7,
 # git
+# This will create a venv. To use the dependencies you should activate it:
+# For bash 'source venv/bin/activate'
+# For fish '. ./venv/bin/activate.fish'
+
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -18,6 +22,9 @@ source venv/bin/activate
 
 # Create dir
 mkdir -p "${BASE_DIR}/src"
+
+# Install numpy
+pip install numpy==1.17.2
 
 # 1) Install pybind11
 echo
