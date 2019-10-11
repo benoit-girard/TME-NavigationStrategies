@@ -40,7 +40,7 @@ angleRMin=144
 angleRMax=199
 
 # Q-learning related stuff:
-# definition of states at time t and t+1
+# definition of states at time t and t-1
 S_t = ''
 S_tm1 = ''
 
