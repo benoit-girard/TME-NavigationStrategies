@@ -1,6 +1,6 @@
 # TME-NavigationStrategies
 
-**IAR - 2019 : le TME est à me rendre à la fin de la séance du 18 octobre, à 13h au plus tard !**
+**IAR - 2020 : le TME est à me rendre à la fin de la séance, à 13h au plus tard !**
 
 ## Contexte
 
@@ -20,7 +20,7 @@ Deux stratégies de navigation sont pré-programmées :
 
 Elles sont testables de manière isolée en lançant ```python wallFollower.py``` et ```python radarGuidance.py```. La coordination des deux stratégies est à coder dans ```strategyGating.py```, qui contient déjà le code permettant de lancer la simulation, de récupérer les données des senseurs, de les transformer en un identifiant d'état (voir plus loin), de téléporter le robot lorsqu'il arrive au but (et de le récompenser), de le punir lorsqu'il approche trop d'un mur, et de répéter les opérations jusqu'à l'obtention de 40 récompenses.
 
-Le codage proprement-dit de ce TME correspond à, maximum, 40 lignes de python. Il faut faire du code propre et qui marche **mais** ça n'est pas le coeur du travail : il s'agit surtout d'essayer d'avoir une approche scientifique par rapport à la question posée. A savoir : mesurer les phénomènes avec, autant que possible, suffisament de répétitions pour en extraire la tendance générale et la dispersion autour de cette tendance, les quantifier afin de pouvoir effectuer des comparaisons, représenter les données obtenues de manière lisible, analyser et commenter ces résultats.
+Le codage proprement-dit de ce TME correspond à, maximum, 40 lignes de python. Il faut faire du code propre et qui marche **mais** ça n'est pas le cœur du travail : il s'agit surtout d'essayer d'avoir une approche scientifique par rapport à la question posée. A savoir : mesurer les phénomènes avec, autant que possible, suffisament de répétitions pour en extraire la tendance générale et la dispersion autour de cette tendance, les quantifier afin de pouvoir effectuer des comparaisons, représenter les données obtenues de manière lisible, analyser et commenter ces résultats.
 
 ## Informations techniques
 
