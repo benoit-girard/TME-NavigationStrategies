@@ -53,7 +53,7 @@ Plan to send me an email at the end of the practical containing your version of 
 
 **Pro-tip :** While these 20 trials are going on, rather than staring at the moving robot, begin the next question.
 
-3. Programm a ```qlearning``` arbitration method similar to the one used in (Dollé et al., 2O1O): it uses a Q learning algorithm to learn, trial after trial, which strategy is the most adapted given the perceived state.
+3. Programm a ```qlearning``` arbitration method similar to the one used in (Dollé et al., 2010): it uses a Q learning algorithm to learn, trial after trial, which strategy is the most adapted given the perceived state.
 
 ![Definition of states](FigStates.png)
 
