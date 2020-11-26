@@ -20,7 +20,7 @@ You will have to programm about 40 lines of python. You should write clean and o
 
 ## Technical information
 
-You have to write code in the ```strategyGating``` function of file ```strategyGating.py```, in order to implement the arbitration methods required by the exercises, and also possibly in the ```main``` function in order to store data at the end of an experiment. Each arbitration method has to signal the chosen strategy by putting either ```0``` (wall follower) or ```1``` (beacon approach).
+You have to write code in the ```strategyGating``` function of file ```strategyGating.py```, in order to implement the arbitration methods required by the exercises, and also possibly in the ```main``` function in order to store data at the end of an experiment. Each arbitration method has to signal the chosen strategy by putting either ```0``` (wall follower) or ```1``` (beacon approach) in the ```choice``` variable.
 
 When an experiment is finished (```nbTrials``` have been made), the duration of each trial is stored in a file named ```log/time-TrialDuration-method.txt``` (do not forget to create a ```log/``` directory).
 
