@@ -4,11 +4,8 @@
 
 ## Contexte
 
-Ce TME requiert l'installation de [pyfastsim](https://github.com/alexendy/pyfastsim), une interface python du simulateur très léger [fastsim](https://github.com/jbmouret/libfastsim).
-
+Ce TME requiert l'utilisation de la machine virtuelle installée sur les postes fixes de la salle. 
 C'est un complément des cours sur les stratégies multiples de navigation et sur l'apprentissage par renforcement.
-
-Il est pensé pour occuper une première séance de 2 heures de découverte et de début de mise en place du code, et d'une 2e séance de 4h, notée, servant principalement à acquérir les données, à les analyser et à produire le document de réponse aux questions.
 
 ## Présentation générale
 
@@ -83,15 +80,13 @@ Il vous est donc demandé de faire fonctionner l'algorithme de la manière suiva
 * faire une mise à jour de Q(s,a) lorsque l'état vient de changer, lorsqu'on a fait un choix à la boucle précédente, ou lorsque la récompense est non-nulle.
 * choisir une nouvelle action lorsque l'état vient de changer, lorsque la récompense est non-nulle ou lorsqu'il n'y a pas eu de changement de choix depuis 2 secondes.
 
-4. Pour caracterister le comportement de ce Q-Learning, sauvegardez les positions du robot toutes les secondes pour chaque essai d'une expérience de 40 essais, ainsi que les Q-valeurs obtenues à la fin du 40e essai.
+4. Pour caracterister le comportement de ce Q-Learning, sauvegardez les Q-valeurs obtenues à la fin du 40e essai.
 
 5. Pour estimer l'efficacité de ce Q-Learning, répétez 4 à 10 fois (selon le temps disponible) des expériences de 40 essais successifs, et pendant que ça tourne, passez à l'étape 6.
 
-6. Pendant que ces expériences tournent, utilisez les données obtenues à l'étape 4 pour réaliser un histogramme 2D des positions (discrétisées avec un pas de 50x50 pixels) pour les 10 premier essais, puis les 10 derniers, sous forme de deux fichiers ```histoDebut.csv``` et ```histoFin.csv```, puis autant que possible produire deux représentations visuelles sous formes de *heatmaps* (par exemple en utilisant la fonction ```imshow()``` de ```pyplot```) de ces occupations. Commentez le résultat obtenu.
+6. Dans les Q-valeurs sauvegardées à l'étape 4, quelles sont celles des états ```00002``` et ```00072``` ? ```00000``` et ```00070``` ? ```11101``` et ```11171``` ? Ces valeurs, pour chacune des deux stratégies, vous semblent-elles logiques ?
 
-7. Dans les Q-valeurs sauvegardées à l'étape 4, quelles sont celles des états ```00002``` et ```00072``` ? ```00000``` et ```00070``` ? ```11101``` et ```11171``` ? Ces valeurs, pour chacune des deux stratégies, vous semblent-elles logiques ?
-
-8. Une fois les données de l'étape 5 obtenues :
+7. Une fois les données de l'étape 5 obtenues :
 * produire une figure représentant les courbes de durée de chaque essai pour les runs réalisés. La commenter.
 * mesurez la médiane et les quartiles de la durée des essais sur les 10 premiers essais de tous les runs cummulés, puis sur les 10 derniers. Observez-vous une amélioration des performances ? Comment cette mesure sur les 10 derniers essais se compare-t-elle à celle réalisée à l'étape 2 ? Le Q-Learning est il meilleur après apprentissage ?
 
