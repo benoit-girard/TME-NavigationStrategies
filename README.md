@@ -1,6 +1,6 @@
 # TME-NavigationStrategies
 
-**IAR - 2020 : le TME est à me rendre à la fin de la séance.**
+**IAR - 2023 : le TME est à me rendre à la fin de la séance.**
 
 ## Contexte
 
