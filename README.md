@@ -1,6 +1,6 @@
 # TME-NavigationStrategies
 
-**IAR - 2020 : le TME est à me rendre à la fin de la 2e séance, à 13h au plus tard !**
+**IAR - 2020 : le TME est à me rendre à la fin de la séance.**
 
 ## Contexte
 
